@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#FF9F1C">
 <title>Pull Party</title>
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png">
-<link rel="apple-touch-icon" href="./icon-192.png">
 <style>
   /* ---------- Tokens ---------- */
   :root{
@@ -47,8 +44,7 @@
     height: 100vh;
     height: 100dvh;
     min-height: -webkit-fill-available;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI Rounded",
-                 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI Rounded", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: var(--text);
     -webkit-font-smoothing: antialiased;
   }
@@ -79,16 +75,16 @@
   .header{
     flex: 0 0 auto;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 10px;
     padding-bottom: clamp(8px, 2vh, 16px);
   }
   .brand{
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     background: none;
     border: none;
     padding: 4px 2px;
@@ -99,16 +95,11 @@
     font-weight: 900;
     font-size: clamp(20px, 5.5vw, 26px);
     letter-spacing: -0.02em;
-    white-space: nowrap;
   }
   .brand-sub{
     font-size: clamp(12px, 3.2vw, 14px);
     color: var(--text-soft);
     font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 40vw;
   }
   .header-controls{
     flex: 0 0 auto;
@@ -137,7 +128,6 @@
     font-size: clamp(11px, 3vw, 13px);
     padding: 6px 4px;
     cursor: pointer;
-    white-space: nowrap;
   }
 
   /* ---------- Home main buttons ---------- */
@@ -185,15 +175,6 @@
     0%, 55%{ transform: translateX(-120%); }
     75%{ transform: translateX(120%); }
     100%{ transform: translateX(120%); }
-  }
-
-  .home-footnote{
-    flex: 0 0 auto;
-    text-align: center;
-    color: var(--text-soft);
-    font-size: clamp(11px, 3vw, 13px);
-    font-weight: 600;
-    padding-top: clamp(6px, 1.6vh, 12px);
   }
 
   /* ---------- Name entry ---------- */
@@ -275,7 +256,7 @@
     padding: 14px calc(var(--safe-r) + 16px) calc(var(--safe-b) + 12px) calc(var(--safe-l) + 16px);
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: 40vh; /* Better space filling */
     box-shadow: 0 -10px 30px rgba(43,37,48,0.25);
   }
   @media (orientation: landscape){
@@ -290,7 +271,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: clamp(6px, 1.6vh, 12px);
+    padding-bottom: clamp(12px, 2vh, 18px);
   }
   .modal-head h2{
     font-size: clamp(17px, 4.8vw, 21px);
@@ -309,14 +290,10 @@
 
   .rarity-grid{
     flex: 1 1 auto;
-    min-height: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(6px, 1.8vw, 10px);
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 2vw, 14px);
     overflow: hidden;
-  }
-  @media (orientation: landscape){
-    .rarity-grid{ grid-template-columns: repeat(4, 1fr); }
   }
   .rarity-btn{
     border: 2px solid var(--line);
@@ -326,14 +303,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 8px;
     cursor: pointer;
-    min-height: 0;
-    padding: 4px;
+    padding: 12px;
   }
-  .rarity-btn .r-icon{ font-size: clamp(20px, 6vw, 28px); line-height: 1; }
+  .rarity-btn .r-icon{ font-size: clamp(24px, 7vw, 32px); line-height: 1; }
   .rarity-btn .r-label{
-    font-size: clamp(10px, 2.7vw, 12px);
+    font-size: clamp(12px, 3vw, 14px);
     font-weight: 800;
     color: var(--text-soft);
   }
@@ -354,14 +330,10 @@
 
   .tag-grid{
     flex: 1 1 auto;
-    min-height: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(8px, 2vw, 12px);
+    grid-template-columns: repeat(1, 1fr);
+    gap: clamp(10px, 2vw, 14px);
     overflow: hidden;
-  }
-  @media (orientation: landscape){
-    .tag-grid{ grid-template-columns: repeat(5, 1fr); }
   }
   .tag-btn{
     border: 2px solid var(--line);
@@ -370,39 +342,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     font-weight: 800;
-    font-size: clamp(13px, 3.6vw, 15px);
+    font-size: clamp(15px, 4vw, 18px);
     cursor: pointer;
-    padding: 6px 8px;
-    min-height: 0;
+    padding: 12px;
   }
-  .tag-btn .t-icon{ font-size: clamp(18px, 5vw, 22px); }
-  .tag-btn.selected{
-    background: linear-gradient(135deg, var(--love-1), var(--love-2));
-    border-color: transparent;
-    color: white;
-  }
-  .tag-btn.loved-it{ grid-column: span 2; }
-  @media (orientation: landscape){ .tag-btn.loved-it{ grid-column: span 1; } }
-
-  .modal-footer{
-    flex: 0 0 auto;
-    padding-top: clamp(8px, 2vh, 14px);
-  }
-  .confirm-btn{
-    width: 100%;
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: 900;
-    font-size: clamp(15px, 4.2vw, 18px);
-    padding: clamp(12px, 3vh, 16px);
-    cursor: pointer;
-    color: white;
-    min-height: var(--tap);
-  }
-  .confirm-btn.sparkly{ background: linear-gradient(135deg, var(--sparkly-1), var(--sparkly-2)); }
-  .confirm-btn.love{ background: linear-gradient(135deg, var(--love-1), var(--love-2)); }
+  .tag-btn .t-icon{ font-size: clamp(20px, 5.5vw, 26px); }
 
   .newsession-text{
     color: var(--text-soft);
@@ -455,14 +401,19 @@
     position: relative;
     z-index: 1;
     font-weight: 900;
-    font-size: clamp(30px, 10vw, 52px);
+    font-size: clamp(34px, 12vw, 60px);
     color: var(--text);
-    text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+    text-shadow: 0 4px 12px rgba(255,255,255,0.8);
     text-align: center;
     padding: 0 20px;
+    transform: scale(0.8);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  @keyframes popIn {
+    to { transform: scale(1); }
   }
 
-  /* ---------- Awards ---------- */
+  /* ---------- Awards & History ---------- */
   .awards-head{
     flex: 0 0 auto;
     display: flex;
@@ -474,52 +425,53 @@
     font-size: clamp(20px, 5.6vw, 26px);
     font-weight: 900;
     flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .awards-body{
     flex: 1 1 auto;
-    min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: clamp(8px, 1.8vh, 14px);
-    justify-content: center;
+    gap: clamp(12px, 2vh, 16px);
+    overflow: hidden;
   }
-  .award-card{
+  .awards-summary-box{
+    flex: 0 0 auto;
     background: var(--card);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow);
-    padding: clamp(12px, 2.6vh, 18px) clamp(14px, 3.6vw, 18px);
+    padding: clamp(12px, 2vh, 16px);
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(14px, 3.8vw, 16px);
+    color: var(--text-soft);
+  }
+  .pull-history-list{
+    flex: 1 1 auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .history-item{
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: clamp(10px, 3vw, 14px);
+    gap: 12px;
   }
-  .award-card .a-icon{ font-size: clamp(24px, 6.5vw, 32px); flex: 0 0 auto; }
-  .award-card .a-body{ min-width: 0; }
-  .award-card .a-label{
-    font-size: clamp(11px, 2.9vw, 13px);
-    font-weight: 700;
-    color: var(--text-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-  .award-card .a-value{
-    font-size: clamp(15px, 4.2vw, 19px);
-    font-weight: 900;
-  }
-  .awards-summary{
-    text-align: center;
-    font-weight: 700;
-    font-size: clamp(13px, 3.6vw, 15px);
-    color: var(--text-soft);
-    padding-top: clamp(4px, 1.2vh, 8px);
+  .history-icon{ font-size: 24px; }
+  .history-details{ flex: 1; }
+  .history-title{ font-weight: 800; font-size: 15px; }
+  .history-time{ font-weight: 600; font-size: 12px; color: var(--text-soft); }
+
+  .finish-btn-wrapper{
+    flex: 0 0 auto;
+    padding-top: 10px;
   }
 
-  /* ---------- Reduced motion ---------- */
-  @media (prefers-reduced-motion: reduce){
-    .big-btn::after{ animation: none; }
-  }
 </style>
 </head>
 <body>
@@ -548,7 +500,7 @@
       <div class="header-controls">
         <button id="remove-last-btn" class="text-link hidden">Undo</button>
         <button id="awards-link" class="text-link">Awards</button>
-        <button id="newsession-link" class="text-link">New</button>
+        <button id="finish-link" class="text-link">Finish</button>
         <button id="mute-btn" class="icon-btn" aria-label="Toggle sound">🔇</button>
       </div>
     </div>
@@ -561,39 +513,23 @@
         <span class="emoji">💛</span><span>Something I Love!</span>
       </button>
     </div>
-
-    <div class="home-footnote">Tap whenever you spot something good &mdash; no rush!</div>
   </section>
 
-  <!-- Awards -->
+  <!-- Awards / Session Summary -->
   <section id="screen-awards" class="screen hidden">
     <div class="awards-head">
       <button id="awards-back" class="icon-btn" aria-label="Back to home">←</button>
-      <h1 id="awards-title">Awards</h1>
+      <h1 id="awards-title">Session Summary</h1>
     </div>
     <div class="awards-body">
-      <div class="award-card">
-        <span class="a-icon">🏆</span>
-        <div class="a-body">
-          <div class="a-label">Sparkle Highlight</div>
-          <div id="award-sparkle" class="a-value">No sparkly pulls yet!</div>
-        </div>
+      <div id="awards-summary" class="awards-summary-box"></div>
+      
+      <div id="pull-history" class="pull-history-list">
+        <!-- History Items Injected Here -->
       </div>
-      <div class="award-card">
-        <span class="a-icon">💛</span>
-        <div class="a-body">
-          <div class="a-label">Charm Highlight</div>
-          <div id="award-charm" class="a-value">No favorites yet!</div>
-        </div>
-      </div>
-      <div class="award-card">
-        <span class="a-icon">🎉</span>
-        <div class="a-body">
-          <div class="a-label">Total Good Pulls</div>
-          <div id="award-total" class="a-value">0</div>
-        </div>
-      </div>
-      <p id="awards-summary" class="awards-summary"></p>
+    </div>
+    <div class="finish-btn-wrapper">
+      <button id="start-new-btn" class="primary-btn" style="width: 100%;">Start New Session</button>
     </div>
   </section>
 
@@ -607,9 +543,6 @@
       <button class="modal-close" data-close="sparkly" aria-label="Close">✕</button>
     </div>
     <div id="rarity-grid" class="rarity-grid"></div>
-    <div class="modal-footer">
-      <button id="sparkly-generic" class="confirm-btn sparkly">Yep, sparkly! 🎉</button>
-    </div>
   </div>
 </div>
 
@@ -621,38 +554,35 @@
       <button class="modal-close" data-close="love" aria-label="Close">✕</button>
     </div>
     <div id="tag-grid" class="tag-grid"></div>
-    <div class="modal-footer">
-      <button id="love-confirm" class="confirm-btn love">Yep, loved it! 🎉</button>
-    </div>
   </div>
 </div>
 
 <!-- Name Edit Modal -->
 <div id="modal-name-edit" class="modal-backdrop hidden">
-  <div class="modal-sheet">
+  <div class="modal-sheet" style="min-height: auto;">
     <div class="modal-head">
       <h2>Playing as...</h2>
       <button class="modal-close" data-close="name-edit" aria-label="Close">✕</button>
     </div>
     <input id="name-edit-input" class="name-input" type="text" maxlength="20" placeholder="Your name (optional)" autocomplete="off">
-    <div class="modal-footer stack-actions">
+    <div style="padding-top: 16px;" class="stack-actions">
       <button id="name-edit-save" class="primary-btn">Save</button>
       <button id="name-edit-clear" class="ghost-btn">Clear name</button>
     </div>
   </div>
 </div>
 
-<!-- New Session Modal -->
-<div id="modal-newsession" class="modal-backdrop hidden">
-  <div class="modal-sheet">
+<!-- Undo Confirmation Modal -->
+<div id="modal-undo" class="modal-backdrop hidden">
+  <div class="modal-sheet" style="min-height: auto;">
     <div class="modal-head">
-      <h2>Start a new session?</h2>
-      <button class="modal-close" data-close="newsession" aria-label="Close">✕</button>
+      <h2>Undo Pull?</h2>
+      <button class="modal-close" data-close="undo" aria-label="Close">✕</button>
     </div>
-    <p class="newsession-text">This clears today's pulls and can't be undone.</p>
+    <p id="undo-text" class="newsession-text"></p>
     <div class="newsession-actions">
-      <button id="newsession-cancel" class="cancel-btn">Cancel</button>
-      <button id="newsession-confirm" class="danger-btn">Clear &amp; Start New</button>
+      <button id="undo-cancel" class="cancel-btn">Keep it</button>
+      <button id="undo-confirm" class="danger-btn">Remove</button>
     </div>
   </div>
 </div>
@@ -698,6 +628,15 @@
     big: ["WOW! 👑", "AMAZING!! 🎉", "JACKPOT! ✨", "INCREDIBLE!! 👑"]
   };
   var lastCopy = { small: -1, medium: -1, big: -1 };
+
+  var RARITY_LABEL = {};
+  RARITIES.forEach(function(r){ RARITY_LABEL[r.id] = r.label; });
+  var RARITY_ICON = {};
+  RARITIES.forEach(function(r){ RARITY_ICON[r.id] = r.icon; });
+  var TAG_LABEL = {};
+  TAGS.forEach(function(t){ TAG_LABEL[t.id] = t.label; });
+  var TAG_ICON = {};
+  TAGS.forEach(function(t){ TAG_ICON[t.id] = t.icon; });
 
   /* =========================================================
      STATE
@@ -765,7 +704,7 @@
   var brandSub = document.getElementById("brand-sub");
   var removeLastBtn = document.getElementById("remove-last-btn");
   var awardsLink = document.getElementById("awards-link");
-  var newsessionLink = document.getElementById("newsession-link");
+  var finishLink = document.getElementById("finish-link");
   var muteBtn = document.getElementById("mute-btn");
 
   var sparklyOpenBtn = document.getElementById("sparkly-open");
@@ -774,28 +713,24 @@
   var modalSparkly = document.getElementById("modal-sparkly");
   var modalLove = document.getElementById("modal-love");
   var modalNameEdit = document.getElementById("modal-name-edit");
-  var modalNewSession = document.getElementById("modal-newsession");
+  var modalUndo = document.getElementById("modal-undo");
 
   var rarityGrid = document.getElementById("rarity-grid");
-  var sparklyGenericBtn = document.getElementById("sparkly-generic");
-
   var tagGrid = document.getElementById("tag-grid");
-  var loveConfirmBtn = document.getElementById("love-confirm");
-  var selectedTags = [];
 
   var nameEditInput = document.getElementById("name-edit-input");
   var nameEditSave = document.getElementById("name-edit-save");
   var nameEditClear = document.getElementById("name-edit-clear");
 
-  var newsessionCancel = document.getElementById("newsession-cancel");
-  var newsessionConfirm = document.getElementById("newsession-confirm");
+  var undoText = document.getElementById("undo-text");
+  var undoCancel = document.getElementById("undo-cancel");
+  var undoConfirm = document.getElementById("undo-confirm");
 
   var awardsBack = document.getElementById("awards-back");
   var awardsTitle = document.getElementById("awards-title");
-  var awardSparkle = document.getElementById("award-sparkle");
-  var awardCharm = document.getElementById("award-charm");
-  var awardTotal = document.getElementById("award-total");
   var awardsSummary = document.getElementById("awards-summary");
+  var pullHistory = document.getElementById("pull-history");
+  var startNewBtn = document.getElementById("start-new-btn");
 
   var celebrationOverlay = document.getElementById("celebration-overlay");
   var celebrationMsg = document.getElementById("celebration-msg");
@@ -810,31 +745,21 @@
     });
   }
 
-  var navStack = [];
-  function pushNav(tag){
-    navStack.push(tag);
-    try{ history.pushState({ pullParty: true, tag: tag }, ""); }catch(e){}
-  }
-  function popNavIfMatches(tag){
-    if(navStack.length && navStack[navStack.length-1] === tag){
-      navStack.pop();
-      try{ history.back(); }catch(e){}
-    }
-  }
+  function openModal(el){ el.classList.remove("hidden"); }
+  function closeModal(el){ el.classList.add("hidden"); }
 
-  window.addEventListener("popstate", function(){
-    var tag = navStack.pop();
-    if(!tag) return;
-    handleBackFor(tag);
+  // Simple direct modal closing
+  document.querySelectorAll(".modal-close").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      closeModal(e.target.closest(".modal-backdrop"));
+    });
   });
 
-  function handleBackFor(tag){
-    if(tag === "sparkly") closeSparklyModal();
-    else if(tag === "love") closeLoveModal();
-    else if(tag === "name-edit") closeNameEditModal();
-    else if(tag === "newsession") closeNewSessionModal();
-    else if(tag === "awards") showScreen("home");
-  }
+  [modalSparkly, modalLove, modalNameEdit, modalUndo].forEach(function(backdrop){
+    backdrop.addEventListener("click", function(e){
+      if(e.target === backdrop) closeModal(backdrop);
+    });
+  });
 
   /* =========================================================
      Rendering
@@ -855,11 +780,10 @@
     RARITIES.forEach(function(r){
       var btn = document.createElement("button");
       btn.className = "rarity-btn " + r.cls;
-      btn.setAttribute("data-rarity", r.id);
       btn.innerHTML = '<span class="r-icon">' + r.icon + '</span><span class="r-label">' + r.label + '</span>';
       btn.addEventListener("click", function(){
         logPull("sparkly", r.id, []);
-        closeSparklyModal(true);
+        closeModal(modalSparkly);
       });
       rarityGrid.appendChild(btn);
     });
@@ -869,13 +793,11 @@
     tagGrid.innerHTML = "";
     TAGS.forEach(function(t){
       var btn = document.createElement("button");
-      btn.className = "tag-btn" + (t.full ? " loved-it" : "");
-      btn.setAttribute("data-tag", t.id);
+      btn.className = "tag-btn";
       btn.innerHTML = '<span class="t-icon">' + t.icon + '</span><span>' + t.label + '</span>';
       btn.addEventListener("click", function(){
-        var idx = selectedTags.indexOf(t.id);
-        if(idx === -1){ selectedTags.push(t.id); btn.classList.add("selected"); }
-        else { selectedTags.splice(idx,1); btn.classList.remove("selected"); }
+        logPull("love", null, [t.id]);
+        closeModal(modalLove);
       });
       tagGrid.appendChild(btn);
     });
@@ -910,89 +832,28 @@
 
   brandBtn.addEventListener("click", function(){
     nameEditInput.value = state.playerName || "";
-    openModal(modalNameEdit, "name-edit");
+    openModal(modalNameEdit);
     setTimeout(function(){ nameEditInput.focus(); }, 50);
   });
-  function closeNameEditModal(){
-    closeModal(modalNameEdit);
-  }
   nameEditSave.addEventListener("click", function(){
     var v = nameEditInput.value.trim().slice(0,20);
     state.playerName = v.length ? v : null;
     saveState();
     renderHome();
-    popNavIfMatches("name-edit");
     closeModal(modalNameEdit);
   });
   nameEditClear.addEventListener("click", function(){
     state.playerName = null;
     saveState();
     renderHome();
-    popNavIfMatches("name-edit");
     closeModal(modalNameEdit);
   });
 
   /* =========================================================
-     Generic modal open/close
+     Sparkly / Love Modals Open
   ========================================================= */
-  function openModal(el, tag){
-    el.classList.remove("hidden");
-    pushNav(tag);
-  }
-  function closeModal(el){
-    el.classList.add("hidden");
-  }
-
-  document.querySelectorAll(".modal-close").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      var which = btn.getAttribute("data-close");
-      popNavIfMatches(which === "name-edit" ? "name-edit" : which);
-    });
-  });
-  // Tap outside sheet (on backdrop) closes without logging.
-  [modalSparkly, modalLove, modalNameEdit, modalNewSession].forEach(function(backdrop){
-    backdrop.addEventListener("click", function(e){
-      if(e.target === backdrop){
-        var tag = backdrop === modalSparkly ? "sparkly"
-          : backdrop === modalLove ? "love"
-          : backdrop === modalNameEdit ? "name-edit"
-          : "newsession";
-        popNavIfMatches(tag);
-      }
-    });
-  });
-
-  /* =========================================================
-     Sparkly flow
-  ========================================================= */
-  sparklyOpenBtn.addEventListener("click", function(){
-    openModal(modalSparkly, "sparkly");
-  });
-  function closeSparklyModal(){
-    closeModal(modalSparkly);
-  }
-  sparklyGenericBtn.addEventListener("click", function(){
-    logPull("sparkly", null, []);
-    popNavIfMatches("sparkly");
-    closeSparklyModal();
-  });
-
-  /* =========================================================
-     Love flow
-  ========================================================= */
-  loveOpenBtn.addEventListener("click", function(){
-    selectedTags = [];
-    tagGrid.querySelectorAll(".tag-btn").forEach(function(b){ b.classList.remove("selected"); });
-    openModal(modalLove, "love");
-  });
-  function closeLoveModal(){
-    closeModal(modalLove);
-  }
-  loveConfirmBtn.addEventListener("click", function(){
-    logPull("love", null, selectedTags.slice());
-    popNavIfMatches("love");
-    closeLoveModal();
-  });
+  sparklyOpenBtn.addEventListener("click", function(){ openModal(modalSparkly); });
+  loveOpenBtn.addEventListener("click", function(){ openModal(modalLove); });
 
   /* =========================================================
      Logging + tiering
@@ -1012,108 +873,82 @@
     var tier = "small";
     if(type === "sparkly"){
       if(detail === "ex" || detail === "crown") tier = "big";
-      else if(detail) tier = "medium";
+      else if(detail === "star3" || detail === "star2_shiny") tier = "medium";
       else tier = "small";
     } else {
       if(tags.indexOf("loved_it") !== -1) tier = "big";
       else if(tags.length > 0) tier = "medium";
-      else tier = "small";
     }
     celebrate(tier);
   }
 
   /* =========================================================
-     Remove last / new session
+     Remove last / Undo Modal
   ========================================================= */
   removeLastBtn.addEventListener("click", function(){
+    var last = state.pulls[state.pulls.length - 1];
+    var displayName = last.type === "sparkly" ? RARITY_LABEL[last.detail] : TAG_LABEL[last.tags[0]];
+    undoText.textContent = "Are you sure you want to remove your last pull (" + displayName + ")?";
+    openModal(modalUndo);
+  });
+
+  undoCancel.addEventListener("click", function(){ closeModal(modalUndo); });
+  undoConfirm.addEventListener("click", function(){
     state.pulls.pop();
     saveState();
     renderHome();
-  });
-
-  newsessionLink.addEventListener("click", function(){
-    openModal(modalNewSession, "newsession");
-  });
-  function closeNewSessionModal(){
-    closeModal(modalNewSession);
-  }
-  newsessionCancel.addEventListener("click", function(){
-    popNavIfMatches("newsession");
-    closeNewSessionModal();
-  });
-  newsessionConfirm.addEventListener("click", function(){
-    var keepName = state.playerName;
-    state = defaultState();
-    state.playerName = keepName;
-    saveState();
-    popNavIfMatches("newsession");
-    closeNewSessionModal();
-    goToInitialScreen();
+    closeModal(modalUndo);
   });
 
   /* =========================================================
-     Awards
+     Awards & Finish Flow
   ========================================================= */
-  var RARITY_RANK = {};
-  RARITIES.forEach(function(r, i){ RARITY_RANK[r.id] = i; });
-  var RARITY_LABEL = {};
-  RARITIES.forEach(function(r){ RARITY_LABEL[r.id] = r.label; });
-  var TAG_LABEL = {};
-  TAGS.forEach(function(t){ TAG_LABEL[t.id] = t.label; });
-
   function renderAwards(){
-    awardsTitle.textContent = state.playerName ? (state.playerName + "'s Awards") : "Awards";
+    awardsTitle.textContent = state.playerName ? (state.playerName + "'s Summary") : "Session Summary";
 
-    var bestRarity = null;
-    state.pulls.forEach(function(p){
-      if(p.type === "sparkly" && p.detail){
-        if(bestRarity === null || RARITY_RANK[p.detail] > RARITY_RANK[bestRarity]){
-          bestRarity = p.detail;
-        }
-      }
-    });
-    awardSparkle.textContent = bestRarity ? RARITY_LABEL[bestRarity] + " ✨" : "No sparkly pulls yet!";
-
-    var tagCounts = {}, firstSeen = {};
-    state.pulls.forEach(function(p, idx){
-      if(p.type === "love" && p.tags && p.tags.length){
-        p.tags.forEach(function(t){
-          tagCounts[t] = (tagCounts[t] || 0) + 1;
-          if(!(t in firstSeen)) firstSeen[t] = idx;
-        });
-      }
-    });
-    var bestTag = null;
-    Object.keys(tagCounts).forEach(function(t){
-      if(bestTag === null) bestTag = t;
-      else if(tagCounts[t] > tagCounts[bestTag]) bestTag = t;
-      else if(tagCounts[t] === tagCounts[bestTag] && firstSeen[t] < firstSeen[bestTag]) bestTag = t;
-    });
-    awardCharm.textContent = bestTag ? (TAG_LABEL[bestTag] + " 💛") : "No favorites yet!";
-
-    awardTotal.textContent = String(state.pulls.length);
-
-    if(bestRarity && bestTag){
-      awardsSummary.textContent = "Today was a " + RARITY_LABEL[bestRarity] + " and " + TAG_LABEL[bestTag] + " kind of day!";
-    } else if(bestRarity){
-      awardsSummary.textContent = "Today was a " + RARITY_LABEL[bestRarity] + " kind of day!";
-    } else if(bestTag){
-      awardsSummary.textContent = "Today was a " + TAG_LABEL[bestTag] + " kind of day!";
-    } else if(state.pulls.length > 0){
-      awardsSummary.textContent = "What a fun pack-opening session!";
+    if(state.pulls.length === 0){
+      awardsSummary.textContent = "No pulls recorded yet!";
     } else {
-      awardsSummary.textContent = "Open some packs and tap in the good ones!";
+      awardsSummary.textContent = "Total Pulls: " + state.pulls.length;
     }
+
+    pullHistory.innerHTML = "";
+    var reversedPulls = state.pulls.slice().reverse();
+    
+    reversedPulls.forEach(function(p){
+      var time = new Date(p.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var title = p.type === "sparkly" ? RARITY_LABEL[p.detail] : TAG_LABEL[p.tags[0]];
+      var icon = p.type === "sparkly" ? RARITY_ICON[p.detail] : TAG_ICON[p.tags[0]];
+
+      var row = document.createElement("div");
+      row.className = "history-item";
+      row.innerHTML = '<div class="history-icon">' + icon + '</div>' +
+                      '<div class="history-details">' +
+                        '<div class="history-title">' + title + '</div>' +
+                        '<div class="history-time">' + time + '</div>' +
+                      '</div>';
+      pullHistory.appendChild(row);
+    });
   }
 
   awardsLink.addEventListener("click", function(){
     renderAwards();
     showScreen("awards");
-    pushNav("awards");
+  });
+  finishLink.addEventListener("click", function(){
+    renderAwards();
+    showScreen("awards");
   });
   awardsBack.addEventListener("click", function(){
-    popNavIfMatches("awards");
     showScreen("home");
+  });
+
+  startNewBtn.addEventListener("click", function(){
+    var keepName = state.playerName;
+    state = defaultState();
+    state.playerName = keepName;
+    saveState();
+    goToInitialScreen();
   });
 
   /* =========================================================
@@ -1126,7 +961,7 @@
   });
 
   /* =========================================================
-     Confetti (vanilla canvas, no dependencies)
+     Confetti & Sound
   ========================================================= */
   var confettiColors = ["#FFD54A", "#FF9F1C", "#FF7AA2", "#FF9F6B", "#A0D8FF", "#C9A8FF", "#A8E6A1"];
   var ctx = confettiCanvas.getContext("2d");
@@ -1148,12 +983,12 @@
       particles.push({
         x: (Math.random()*w) * dpr,
         y: -20 * dpr - Math.random()*40*dpr,
-        vx: (Math.random()-0.5) * 3 * dpr,
-        vy: (2 + Math.random()*3) * dpr,
-        size: (5 + Math.random()*6) * dpr,
+        vx: (Math.random()-0.5) * 6 * dpr,
+        vy: (2 + Math.random()*6) * dpr,
+        size: (6 + Math.random()*8) * dpr,
         color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
         rot: Math.random()*Math.PI*2,
-        vr: (Math.random()-0.5) * 0.3,
+        vr: (Math.random()-0.5) * 0.4,
         life: 1
       });
     }
@@ -1166,7 +1001,7 @@
     particles.forEach(function(p){
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.03 * (window.devicePixelRatio||1);
+      p.vy += 0.05 * (window.devicePixelRatio||1);
       p.rot += p.vr;
       if(now > fadeStart){
         p.life = Math.max(0, (confettiEndAt - now) / 500);
@@ -1195,9 +1030,6 @@
     if(!confettiRAF){ confettiRAF = requestAnimationFrame(stepConfetti); }
   }
 
-  /* =========================================================
-     Audio chime (Big tier only, unmuted) - Web Audio, no assets
-  ========================================================= */
   var audioCtx = null;
   function ensureAudioCtx(){
     if(audioCtx) return audioCtx;
@@ -1208,11 +1040,16 @@
   }
   document.addEventListener("pointerdown", function(){ ensureAudioCtx(); }, { once: true, passive: true });
 
-  function playChime(){
+  function playChime(tier){
     var ac = ensureAudioCtx();
-    if(!ac) return;
+    if(!ac || muted) return;
     if(ac.state === "suspended"){ ac.resume(); }
-    var notes = [523.25, 659.25, 783.99]; // C5 E5 G5
+    
+    var notes;
+    if(tier === "big") notes = [523.25, 659.25, 783.99]; // C5 E5 G5
+    else if(tier === "medium") notes = [523.25, 659.25]; // C5 E5
+    else notes = [659.25]; // E5
+
     var t0 = ac.currentTime;
     notes.forEach(function(freq, i){
       var osc = ac.createOscillator();
@@ -1222,21 +1059,18 @@
       var start = t0 + i*0.11;
       gain.gain.setValueAtTime(0, start);
       gain.gain.linearRampToValueAtTime(0.18, start + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
       osc.connect(gain).connect(ac.destination);
       osc.start(start);
-      osc.stop(start + 0.4);
+      osc.stop(start + 0.45);
     });
   }
 
-  /* =========================================================
-     Celebration overlay
-  ========================================================= */
   var celebrationTimer = null;
   var TIER_CONFIG = {
-    small:  { count: 26,  duration: 1000, overlayMs: 1200 },
-    medium: { count: 60,  duration: 1500, overlayMs: 1800 },
-    big:    { count: 130, duration: 2200, overlayMs: 2500 }
+    small:  { count: 60,  duration: 1200, overlayMs: 1400 },
+    medium: { count: 120, duration: 1800, overlayMs: 2000 },
+    big:    { count: 250, duration: 2500, overlayMs: 2800 }
   };
 
   function pickCopy(tier){
@@ -1255,7 +1089,7 @@
     celebrationMsg.textContent = pickCopy(tier);
     celebrationOverlay.classList.remove("hidden");
     burstConfetti(cfg.count, cfg.duration);
-    if(tier === "big" && !muted){ playChime(); }
+    playChime(tier);
 
     clearTimeout(celebrationTimer);
     celebrationTimer = setTimeout(dismissCelebration, cfg.overlayMs);
@@ -1265,15 +1099,6 @@
     celebrationOverlay.classList.add("hidden");
   }
   celebrationOverlay.addEventListener("click", dismissCelebration);
-
-  /* =========================================================
-     Service worker registration
-  ========================================================= */
-  if("serviceWorker" in navigator){
-    window.addEventListener("load", function(){
-      navigator.serviceWorker.register("./sw.js").catch(function(){ /* no-op if blocked */ });
-    });
-  }
 
   /* =========================================================
      Init
