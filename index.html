@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#FF9F1C">
+<title>Pull Party</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --bg: #FFF8F0;
+    --text: #2B2530;
+    --text-soft: #6b6270;
+    --card: #FFFFFF;
+    --sparkly-1: #FFD54A;
+    --sparkly-2: #FF9F1C;
+    --love-1: #FF7AA2;
+    --love-2: #FF9F6B;
+    --gold: #F5B93B;
+    --gold-deep: #C9861A;
+    --ex: #E8543A;
+    --line: rgba(43,37,48,0.10);
+    --shadow: 0 10px 24px rgba(43,37,48,0.14);
+    --radius-lg: clamp(20px, 5vw, 32px);
+    --radius-md: clamp(14px, 3.5vw, 20px);
+    --tap: clamp(44px, 12vw, 64px);
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-l: env(safe-area-inset-left, 0px);
+    --safe-r: env(safe-area-inset-right, 0px);
+  }
+
+  /* ---------- Reset / viewport lockdown ---------- */
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body{
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    margin: 0;
+    background: var(--bg);
+  }
+  html{ height: -webkit-fill-available; }
+  body{
+    height: 100vh;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI Rounded",
+                 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  button{ font: inherit; color: inherit; }
+  h1,h2,h3,p{ margin: 0; }
+
+  /* ---------- App shell ---------- */
+  #app{
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .screen{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: calc(var(--safe-t) + 14px) calc(var(--safe-r) + 18px) calc(var(--safe-b) + 14px) calc(var(--safe-l) + 18px);
+    min-height: 0;
+  }
+  .hidden{ display: none !important; }
+
+  /* ---------- Header (Home) ---------- */
+  .header{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: clamp(8px, 2vh, 16px);
+  }
+  .brand{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+    background: none;
+    border: none;
+    padding: 4px 2px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .brand-title{
+    font-weight: 900;
+    font-size: clamp(20px, 5.5vw, 26px);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .brand-sub{
+    font-size: clamp(12px, 3.2vw, 14px);
+    color: var(--text-soft);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 40vw;
+  }
+  .header-controls{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 1.6vw, 10px);
+  }
+  .icon-btn{
+    width: clamp(36px, 9vw, 44px);
+    height: clamp(36px, 9vw, 44px);
+    border-radius: 50%;
+    border: none;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 4.5vw, 20px);
+    cursor: pointer;
+  }
+  .text-link{
+    border: none;
+    background: none;
+    color: var(--text-soft);
+    font-weight: 700;
+    font-size: clamp(11px, 3vw, 13px);
+    padding: 6px 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ---------- Home main buttons ---------- */
+  .home-main{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2.6vh, 20px);
+    min-height: 0;
+    justify-content: center;
+  }
+  .big-btn{
+    position: relative;
+    flex: 1 1 0;
+    min-height: 0;
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    font-weight: 900;
+    font-size: clamp(20px, 6.4vw, 30px);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .big-btn .emoji{ font-size: clamp(28px, 8vw, 40px); }
+  .big-btn.sparkly{ background: linear-gradient(135deg, var(--sparkly-1), var(--sparkly-2)); }
+  .big-btn.love{ background: linear-gradient(135deg, var(--love-1), var(--love-2)); }
+  .big-btn::after{
+    content: "";
+    position: absolute;
+    inset: -60% -20%;
+    background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+    transform: translateX(-120%);
+    animation: shine 5.5s ease-in-out infinite;
+    z-index: -1;
+  }
+  .big-btn.love::after{ animation-delay: 2.2s; }
+  @keyframes shine{
+    0%, 55%{ transform: translateX(-120%); }
+    75%{ transform: translateX(120%); }
+    100%{ transform: translateX(120%); }
+  }
+
+  .home-footnote{
+    flex: 0 0 auto;
+    text-align: center;
+    color: var(--text-soft);
+    font-size: clamp(11px, 3vw, 13px);
+    font-weight: 600;
+    padding-top: clamp(6px, 1.6vh, 12px);
+  }
+
+  /* ---------- Name entry ---------- */
+  .center-card-screen{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: clamp(14px, 3vh, 22px);
+  }
+  .center-card-screen .emoji-big{ font-size: clamp(44px, 14vw, 64px); }
+  .center-card-screen h1{
+    font-size: clamp(22px, 6.5vw, 30px);
+    font-weight: 900;
+  }
+  .center-card-screen p.hint{
+    color: var(--text-soft);
+    font-size: clamp(13px, 3.6vw, 15px);
+    font-weight: 600;
+    max-width: 42ch;
+  }
+  .name-input{
+    width: 100%;
+    max-width: 340px;
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: clamp(12px, 3vh, 16px) clamp(14px, 3.6vw, 18px);
+    font-size: clamp(16px, 4.4vw, 18px);
+    font-weight: 700;
+    text-align: center;
+    background: var(--card);
+  }
+  .name-input:focus{ outline: 3px solid var(--sparkly-2); outline-offset: 2px; }
+  .stack-actions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .primary-btn{
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--sparkly-1), var(--sparkly-2));
+    color: white;
+    font-weight: 900;
+    font-size: clamp(16px, 4.4vw, 19px);
+    padding: clamp(12px, 3vh, 16px);
+    cursor: pointer;
+    min-height: var(--tap);
+  }
+  .ghost-btn{
+    border: none;
+    background: none;
+    color: var(--text-soft);
+    font-weight: 700;
+    font-size: clamp(14px, 3.8vw, 16px);
+    padding: 8px;
+    cursor: pointer;
+    min-height: 44px;
+  }
+
+  /* ---------- Modals ---------- */
+  .modal-backdrop{
+    position: fixed;
+    inset: 0;
+    background: rgba(43,37,48,0.42);
+    display: flex;
+    align-items: flex-end;
+    z-index: 40;
+  }
+  @media (orientation: landscape){
+    .modal-backdrop{ align-items: center; justify-content: center; }
+  }
+  .modal-sheet{
+    width: 100%;
+    max-height: calc(100dvh - var(--safe-t) - 12px);
+    background: var(--bg);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 14px calc(var(--safe-r) + 16px) calc(var(--safe-b) + 12px) calc(var(--safe-l) + 16px);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    box-shadow: 0 -10px 30px rgba(43,37,48,0.25);
+  }
+  @media (orientation: landscape){
+    .modal-sheet{
+      max-width: 560px;
+      border-radius: var(--radius-lg);
+      max-height: calc(100dvh - 24px);
+    }
+  }
+  .modal-head{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: clamp(6px, 1.6vh, 12px);
+  }
+  .modal-head h2{
+    font-size: clamp(17px, 4.8vw, 21px);
+    font-weight: 900;
+  }
+  .modal-close{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(43,37,48,0.06);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+  .rarity-grid{
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(6px, 1.8vw, 10px);
+    overflow: hidden;
+  }
+  @media (orientation: landscape){
+    .rarity-grid{ grid-template-columns: repeat(4, 1fr); }
+  }
+  .rarity-btn{
+    border: 2px solid var(--line);
+    background: var(--card);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    min-height: 0;
+    padding: 4px;
+  }
+  .rarity-btn .r-icon{ font-size: clamp(20px, 6vw, 28px); line-height: 1; }
+  .rarity-btn .r-label{
+    font-size: clamp(10px, 2.7vw, 12px);
+    font-weight: 800;
+    color: var(--text-soft);
+  }
+  .rarity-ex .r-icon{ color: var(--ex); }
+  .rarity-star .r-icon{ color: var(--gold-deep); }
+  .rarity-star.shiny .r-icon{
+    background: linear-gradient(90deg,#FF9AA2,#FFD97A,#A8E6A1,#A0D8FF,#C9A8FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .rarity-crown .r-icon{
+    background: linear-gradient(135deg,#FFD700,#FFF3B0,#E8B923,#FFD700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tag-grid{
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(8px, 2vw, 12px);
+    overflow: hidden;
+  }
+  @media (orientation: landscape){
+    .tag-grid{ grid-template-columns: repeat(5, 1fr); }
+  }
+  .tag-btn{
+    border: 2px solid var(--line);
+    background: var(--card);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: clamp(13px, 3.6vw, 15px);
+    cursor: pointer;
+    padding: 6px 8px;
+    min-height: 0;
+  }
+  .tag-btn .t-icon{ font-size: clamp(18px, 5vw, 22px); }
+  .tag-btn.selected{
+    background: linear-gradient(135deg, var(--love-1), var(--love-2));
+    border-color: transparent;
+    color: white;
+  }
+  .tag-btn.loved-it{ grid-column: span 2; }
+  @media (orientation: landscape){ .tag-btn.loved-it{ grid-column: span 1; } }
+
+  .modal-footer{
+    flex: 0 0 auto;
+    padding-top: clamp(8px, 2vh, 14px);
+  }
+  .confirm-btn{
+    width: 100%;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 900;
+    font-size: clamp(15px, 4.2vw, 18px);
+    padding: clamp(12px, 3vh, 16px);
+    cursor: pointer;
+    color: white;
+    min-height: var(--tap);
+  }
+  .confirm-btn.sparkly{ background: linear-gradient(135deg, var(--sparkly-1), var(--sparkly-2)); }
+  .confirm-btn.love{ background: linear-gradient(135deg, var(--love-1), var(--love-2)); }
+
+  .newsession-text{
+    color: var(--text-soft);
+    font-weight: 600;
+    font-size: clamp(13px, 3.6vw, 15px);
+    padding-bottom: clamp(10px, 2.4vh, 16px);
+  }
+  .newsession-actions{ display:flex; gap: 10px; }
+  .newsession-actions button{ flex: 1; }
+  .danger-btn{
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--ex);
+    color: white;
+    font-weight: 900;
+    font-size: clamp(14px, 3.8vw, 16px);
+    padding: clamp(11px, 2.8vh, 14px);
+    cursor: pointer;
+    min-height: var(--tap);
+  }
+  .cancel-btn{
+    border: 2px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--card);
+    color: var(--text);
+    font-weight: 800;
+    font-size: clamp(14px, 3.8vw, 16px);
+    padding: clamp(11px, 2.8vh, 14px);
+    cursor: pointer;
+    min-height: var(--tap);
+  }
+
+  /* ---------- Celebration overlay ---------- */
+  #celebration-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(43,37,48,0.06);
+  }
+  #confetti-canvas{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .celebration-msg{
+    position: relative;
+    z-index: 1;
+    font-weight: 900;
+    font-size: clamp(30px, 10vw, 52px);
+    color: var(--text);
+    text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  /* ---------- Awards ---------- */
+  .awards-head{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: clamp(10px, 2.4vh, 16px);
+  }
+  .awards-head h1{
+    font-size: clamp(20px, 5.6vw, 26px);
+    font-weight: 900;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .awards-body{
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.8vh, 14px);
+    justify-content: center;
+  }
+  .award-card{
+    background: var(--card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    padding: clamp(12px, 2.6vh, 18px) clamp(14px, 3.6vw, 18px);
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 3vw, 14px);
+  }
+  .award-card .a-icon{ font-size: clamp(24px, 6.5vw, 32px); flex: 0 0 auto; }
+  .award-card .a-body{ min-width: 0; }
+  .award-card .a-label{
+    font-size: clamp(11px, 2.9vw, 13px);
+    font-weight: 700;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .award-card .a-value{
+    font-size: clamp(15px, 4.2vw, 19px);
+    font-weight: 900;
+  }
+  .awards-summary{
+    text-align: center;
+    font-weight: 700;
+    font-size: clamp(13px, 3.6vw, 15px);
+    color: var(--text-soft);
+    padding-top: clamp(4px, 1.2vh, 8px);
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    .big-btn::after{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Name Entry -->
+  <section id="screen-name-entry" class="screen center-card-screen hidden">
+    <div class="emoji-big">🎉</div>
+    <h1>Welcome to Pull Party!</h1>
+    <p class="hint">Add a name if you'd like &mdash; totally optional.</p>
+    <input id="name-input" class="name-input" type="text" maxlength="20" placeholder="Your name (optional)" autocomplete="off">
+    <div class="stack-actions">
+      <button id="name-submit" class="primary-btn">Let's go! 🎉</button>
+      <button id="name-skip" class="ghost-btn">Skip</button>
+    </div>
+  </section>
+
+  <!-- Home -->
+  <section id="screen-home" class="screen hidden">
+    <div class="header">
+      <button id="brand-btn" class="brand" aria-label="Edit player name">
+        <span class="brand-title">Pull Party</span>
+        <span id="brand-sub" class="brand-sub hidden"></span>
+      </button>
+      <div class="header-controls">
+        <button id="remove-last-btn" class="text-link hidden">Undo</button>
+        <button id="awards-link" class="text-link">Awards</button>
+        <button id="newsession-link" class="text-link">New</button>
+        <button id="mute-btn" class="icon-btn" aria-label="Toggle sound">🔇</button>
+      </div>
+    </div>
+
+    <div class="home-main">
+      <button id="sparkly-open" class="big-btn sparkly">
+        <span class="emoji">✨</span><span>Something Sparkly!</span>
+      </button>
+      <button id="love-open" class="big-btn love">
+        <span class="emoji">💛</span><span>Something I Love!</span>
+      </button>
+    </div>
+
+    <div class="home-footnote">Tap whenever you spot something good &mdash; no rush!</div>
+  </section>
+
+  <!-- Awards -->
+  <section id="screen-awards" class="screen hidden">
+    <div class="awards-head">
+      <button id="awards-back" class="icon-btn" aria-label="Back to home">←</button>
+      <h1 id="awards-title">Awards</h1>
+    </div>
+    <div class="awards-body">
+      <div class="award-card">
+        <span class="a-icon">🏆</span>
+        <div class="a-body">
+          <div class="a-label">Sparkle Highlight</div>
+          <div id="award-sparkle" class="a-value">No sparkly pulls yet!</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <span class="a-icon">💛</span>
+        <div class="a-body">
+          <div class="a-label">Charm Highlight</div>
+          <div id="award-charm" class="a-value">No favorites yet!</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <span class="a-icon">🎉</span>
+        <div class="a-body">
+          <div class="a-label">Total Good Pulls</div>
+          <div id="award-total" class="a-value">0</div>
+        </div>
+      </div>
+      <p id="awards-summary" class="awards-summary"></p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Sparkly Modal -->
+<div id="modal-sparkly" class="modal-backdrop hidden">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2>Which one matched? ✨</h2>
+      <button class="modal-close" data-close="sparkly" aria-label="Close">✕</button>
+    </div>
+    <div id="rarity-grid" class="rarity-grid"></div>
+    <div class="modal-footer">
+      <button id="sparkly-generic" class="confirm-btn sparkly">Yep, sparkly! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- Love Modal -->
+<div id="modal-love" class="modal-backdrop hidden">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2>What did you love? 💛</h2>
+      <button class="modal-close" data-close="love" aria-label="Close">✕</button>
+    </div>
+    <div id="tag-grid" class="tag-grid"></div>
+    <div class="modal-footer">
+      <button id="love-confirm" class="confirm-btn love">Yep, loved it! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- Name Edit Modal -->
+<div id="modal-name-edit" class="modal-backdrop hidden">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2>Playing as...</h2>
+      <button class="modal-close" data-close="name-edit" aria-label="Close">✕</button>
+    </div>
+    <input id="name-edit-input" class="name-input" type="text" maxlength="20" placeholder="Your name (optional)" autocomplete="off">
+    <div class="modal-footer stack-actions">
+      <button id="name-edit-save" class="primary-btn">Save</button>
+      <button id="name-edit-clear" class="ghost-btn">Clear name</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Session Modal -->
+<div id="modal-newsession" class="modal-backdrop hidden">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2>Start a new session?</h2>
+      <button class="modal-close" data-close="newsession" aria-label="Close">✕</button>
+    </div>
+    <p class="newsession-text">This clears today's pulls and can't be undone.</p>
+    <div class="newsession-actions">
+      <button id="newsession-cancel" class="cancel-btn">Cancel</button>
+      <button id="newsession-confirm" class="danger-btn">Clear &amp; Start New</button>
+    </div>
+  </div>
+</div>
+
+<!-- Celebration Overlay -->
+<div id="celebration-overlay" class="hidden">
+  <canvas id="confetti-canvas"></canvas>
+  <div id="celebration-msg" class="celebration-msg"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     DATA
+  ========================================================= */
+  var STORAGE_KEY = "pullPartySession";
+  var MUTE_KEY = "pullPartyMuted";
+  var SCHEMA_VERSION = 1;
+
+  var RARITIES = [
+    { id: "ex",          label: "EX",       icon: "🎫", cls: "rarity-ex" },
+    { id: "star1",       label: "1★",       icon: "★",  cls: "rarity-star" },
+    { id: "star1_shiny", label: "Shiny 1★", icon: "★",  cls: "rarity-star shiny" },
+    { id: "star2",       label: "2★",       icon: "★★", cls: "rarity-star" },
+    { id: "star2_shiny", label: "Shiny 2★", icon: "★★", cls: "rarity-star shiny" },
+    { id: "star3",       label: "3★",       icon: "★★★",cls: "rarity-star" },
+    { id: "crown",       label: "Crown",    icon: "♛",  cls: "rarity-crown" }
+  ];
+
+  var TAGS = [
+    { id: "cute",       label: "Cute",          icon: "🐾" },
+    { id: "funny",      label: "Funny",         icon: "😂" },
+    { id: "cool_art",   label: "Cool Art",      icon: "🎨" },
+    { id: "great_name", label: "Great Name",    icon: "🏷️" },
+    { id: "loved_it",   label: "Just Loved It", icon: "❤️", full: true }
+  ];
+
+  var COPY = {
+    small: ["Nice!", "Got it!", "Sweet!", "Logged!"],
+    medium: ["Ooh, nice one! ✨", "Love that! 💛", "Great pull!", "Awesome!"],
+    big: ["WOW! 👑", "AMAZING!! 🎉", "JACKPOT! ✨", "INCREDIBLE!! 👑"]
+  };
+  var lastCopy = { small: -1, medium: -1, big: -1 };
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+  var state = null;
+  var muted = true;
+
+  function defaultState(){
+    return {
+      schemaVersion: SCHEMA_VERSION,
+      playerName: null,
+      sessionStarted: new Date().toISOString(),
+      pulls: []
+    };
+  }
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return defaultState();
+      var parsed = JSON.parse(raw);
+      if(!parsed || parsed.schemaVersion !== SCHEMA_VERSION || !Array.isArray(parsed.pulls)){
+        return defaultState();
+      }
+      return parsed;
+    }catch(e){
+      return defaultState();
+    }
+  }
+
+  function saveState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function loadMuted(){
+    try{
+      var raw = localStorage.getItem(MUTE_KEY);
+      return raw === null ? true : raw === "1";
+    }catch(e){ return true; }
+  }
+  function saveMuted(){
+    try{ localStorage.setItem(MUTE_KEY, muted ? "1" : "0"); }catch(e){}
+  }
+
+  function uuid(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c){
+      var r = Math.random()*16|0, v = c === "x" ? r : (r&0x3|0x8);
+      return v.toString(16);
+    });
+  }
+
+  /* =========================================================
+     DOM refs
+  ========================================================= */
+  var screenNameEntry = document.getElementById("screen-name-entry");
+  var screenHome = document.getElementById("screen-home");
+  var screenAwards = document.getElementById("screen-awards");
+
+  var nameInput = document.getElementById("name-input");
+  var nameSubmit = document.getElementById("name-submit");
+  var nameSkip = document.getElementById("name-skip");
+
+  var brandBtn = document.getElementById("brand-btn");
+  var brandSub = document.getElementById("brand-sub");
+  var removeLastBtn = document.getElementById("remove-last-btn");
+  var awardsLink = document.getElementById("awards-link");
+  var newsessionLink = document.getElementById("newsession-link");
+  var muteBtn = document.getElementById("mute-btn");
+
+  var sparklyOpenBtn = document.getElementById("sparkly-open");
+  var loveOpenBtn = document.getElementById("love-open");
+
+  var modalSparkly = document.getElementById("modal-sparkly");
+  var modalLove = document.getElementById("modal-love");
+  var modalNameEdit = document.getElementById("modal-name-edit");
+  var modalNewSession = document.getElementById("modal-newsession");
+
+  var rarityGrid = document.getElementById("rarity-grid");
+  var sparklyGenericBtn = document.getElementById("sparkly-generic");
+
+  var tagGrid = document.getElementById("tag-grid");
+  var loveConfirmBtn = document.getElementById("love-confirm");
+  var selectedTags = [];
+
+  var nameEditInput = document.getElementById("name-edit-input");
+  var nameEditSave = document.getElementById("name-edit-save");
+  var nameEditClear = document.getElementById("name-edit-clear");
+
+  var newsessionCancel = document.getElementById("newsession-cancel");
+  var newsessionConfirm = document.getElementById("newsession-confirm");
+
+  var awardsBack = document.getElementById("awards-back");
+  var awardsTitle = document.getElementById("awards-title");
+  var awardSparkle = document.getElementById("award-sparkle");
+  var awardCharm = document.getElementById("award-charm");
+  var awardTotal = document.getElementById("award-total");
+  var awardsSummary = document.getElementById("awards-summary");
+
+  var celebrationOverlay = document.getElementById("celebration-overlay");
+  var celebrationMsg = document.getElementById("celebration-msg");
+  var confettiCanvas = document.getElementById("confetti-canvas");
+
+  /* =========================================================
+     Screen / modal helpers
+  ========================================================= */
+  function showScreen(id){
+    [screenNameEntry, screenHome, screenAwards].forEach(function(s){
+      s.classList.toggle("hidden", s.id !== "screen-" + id);
+    });
+  }
+
+  var navStack = [];
+  function pushNav(tag){
+    navStack.push(tag);
+    try{ history.pushState({ pullParty: true, tag: tag }, ""); }catch(e){}
+  }
+  function popNavIfMatches(tag){
+    if(navStack.length && navStack[navStack.length-1] === tag){
+      navStack.pop();
+      try{ history.back(); }catch(e){}
+    }
+  }
+
+  window.addEventListener("popstate", function(){
+    var tag = navStack.pop();
+    if(!tag) return;
+    handleBackFor(tag);
+  });
+
+  function handleBackFor(tag){
+    if(tag === "sparkly") closeSparklyModal();
+    else if(tag === "love") closeLoveModal();
+    else if(tag === "name-edit") closeNameEditModal();
+    else if(tag === "newsession") closeNewSessionModal();
+    else if(tag === "awards") showScreen("home");
+  }
+
+  /* =========================================================
+     Rendering
+  ========================================================= */
+  function renderHome(){
+    if(state.playerName){
+      brandSub.textContent = "Playing as " + state.playerName;
+      brandSub.classList.remove("hidden");
+    } else {
+      brandSub.classList.add("hidden");
+    }
+    removeLastBtn.classList.toggle("hidden", state.pulls.length === 0);
+    muteBtn.textContent = muted ? "🔇" : "🔊";
+  }
+
+  function buildRarityGrid(){
+    rarityGrid.innerHTML = "";
+    RARITIES.forEach(function(r){
+      var btn = document.createElement("button");
+      btn.className = "rarity-btn " + r.cls;
+      btn.setAttribute("data-rarity", r.id);
+      btn.innerHTML = '<span class="r-icon">' + r.icon + '</span><span class="r-label">' + r.label + '</span>';
+      btn.addEventListener("click", function(){
+        logPull("sparkly", r.id, []);
+        closeSparklyModal(true);
+      });
+      rarityGrid.appendChild(btn);
+    });
+  }
+
+  function buildTagGrid(){
+    tagGrid.innerHTML = "";
+    TAGS.forEach(function(t){
+      var btn = document.createElement("button");
+      btn.className = "tag-btn" + (t.full ? " loved-it" : "");
+      btn.setAttribute("data-tag", t.id);
+      btn.innerHTML = '<span class="t-icon">' + t.icon + '</span><span>' + t.label + '</span>';
+      btn.addEventListener("click", function(){
+        var idx = selectedTags.indexOf(t.id);
+        if(idx === -1){ selectedTags.push(t.id); btn.classList.add("selected"); }
+        else { selectedTags.splice(idx,1); btn.classList.remove("selected"); }
+      });
+      tagGrid.appendChild(btn);
+    });
+  }
+
+  /* =========================================================
+     Name entry / edit
+  ========================================================= */
+  function goToInitialScreen(){
+    if(!state.playerName && state.pulls.length === 0){
+      showScreen("name-entry");
+      nameInput.value = "";
+    } else {
+      showScreen("home");
+    }
+    renderHome();
+  }
+
+  nameSubmit.addEventListener("click", function(){
+    var v = nameInput.value.trim().slice(0,20);
+    state.playerName = v.length ? v : null;
+    saveState();
+    showScreen("home");
+    renderHome();
+  });
+  nameSkip.addEventListener("click", function(){
+    state.playerName = null;
+    saveState();
+    showScreen("home");
+    renderHome();
+  });
+
+  brandBtn.addEventListener("click", function(){
+    nameEditInput.value = state.playerName || "";
+    openModal(modalNameEdit, "name-edit");
+    setTimeout(function(){ nameEditInput.focus(); }, 50);
+  });
+  function closeNameEditModal(){
+    closeModal(modalNameEdit);
+  }
+  nameEditSave.addEventListener("click", function(){
+    var v = nameEditInput.value.trim().slice(0,20);
+    state.playerName = v.length ? v : null;
+    saveState();
+    renderHome();
+    popNavIfMatches("name-edit");
+    closeModal(modalNameEdit);
+  });
+  nameEditClear.addEventListener("click", function(){
+    state.playerName = null;
+    saveState();
+    renderHome();
+    popNavIfMatches("name-edit");
+    closeModal(modalNameEdit);
+  });
+
+  /* =========================================================
+     Generic modal open/close
+  ========================================================= */
+  function openModal(el, tag){
+    el.classList.remove("hidden");
+    pushNav(tag);
+  }
+  function closeModal(el){
+    el.classList.add("hidden");
+  }
+
+  document.querySelectorAll(".modal-close").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var which = btn.getAttribute("data-close");
+      popNavIfMatches(which === "name-edit" ? "name-edit" : which);
+    });
+  });
+  // Tap outside sheet (on backdrop) closes without logging.
+  [modalSparkly, modalLove, modalNameEdit, modalNewSession].forEach(function(backdrop){
+    backdrop.addEventListener("click", function(e){
+      if(e.target === backdrop){
+        var tag = backdrop === modalSparkly ? "sparkly"
+          : backdrop === modalLove ? "love"
+          : backdrop === modalNameEdit ? "name-edit"
+          : "newsession";
+        popNavIfMatches(tag);
+      }
+    });
+  });
+
+  /* =========================================================
+     Sparkly flow
+  ========================================================= */
+  sparklyOpenBtn.addEventListener("click", function(){
+    openModal(modalSparkly, "sparkly");
+  });
+  function closeSparklyModal(){
+    closeModal(modalSparkly);
+  }
+  sparklyGenericBtn.addEventListener("click", function(){
+    logPull("sparkly", null, []);
+    popNavIfMatches("sparkly");
+    closeSparklyModal();
+  });
+
+  /* =========================================================
+     Love flow
+  ========================================================= */
+  loveOpenBtn.addEventListener("click", function(){
+    selectedTags = [];
+    tagGrid.querySelectorAll(".tag-btn").forEach(function(b){ b.classList.remove("selected"); });
+    openModal(modalLove, "love");
+  });
+  function closeLoveModal(){
+    closeModal(modalLove);
+  }
+  loveConfirmBtn.addEventListener("click", function(){
+    logPull("love", null, selectedTags.slice());
+    popNavIfMatches("love");
+    closeLoveModal();
+  });
+
+  /* =========================================================
+     Logging + tiering
+  ========================================================= */
+  function logPull(type, detail, tags){
+    var pull = {
+      id: uuid(),
+      timestamp: new Date().toISOString(),
+      type: type,
+      detail: detail || null,
+      tags: tags || []
+    };
+    state.pulls.push(pull);
+    saveState();
+    renderHome();
+
+    var tier = "small";
+    if(type === "sparkly"){
+      if(detail === "ex" || detail === "crown") tier = "big";
+      else if(detail) tier = "medium";
+      else tier = "small";
+    } else {
+      if(tags.indexOf("loved_it") !== -1) tier = "big";
+      else if(tags.length > 0) tier = "medium";
+      else tier = "small";
+    }
+    celebrate(tier);
+  }
+
+  /* =========================================================
+     Remove last / new session
+  ========================================================= */
+  removeLastBtn.addEventListener("click", function(){
+    state.pulls.pop();
+    saveState();
+    renderHome();
+  });
+
+  newsessionLink.addEventListener("click", function(){
+    openModal(modalNewSession, "newsession");
+  });
+  function closeNewSessionModal(){
+    closeModal(modalNewSession);
+  }
+  newsessionCancel.addEventListener("click", function(){
+    popNavIfMatches("newsession");
+    closeNewSessionModal();
+  });
+  newsessionConfirm.addEventListener("click", function(){
+    var keepName = state.playerName;
+    state = defaultState();
+    state.playerName = keepName;
+    saveState();
+    popNavIfMatches("newsession");
+    closeNewSessionModal();
+    goToInitialScreen();
+  });
+
+  /* =========================================================
+     Awards
+  ========================================================= */
+  var RARITY_RANK = {};
+  RARITIES.forEach(function(r, i){ RARITY_RANK[r.id] = i; });
+  var RARITY_LABEL = {};
+  RARITIES.forEach(function(r){ RARITY_LABEL[r.id] = r.label; });
+  var TAG_LABEL = {};
+  TAGS.forEach(function(t){ TAG_LABEL[t.id] = t.label; });
+
+  function renderAwards(){
+    awardsTitle.textContent = state.playerName ? (state.playerName + "'s Awards") : "Awards";
+
+    var bestRarity = null;
+    state.pulls.forEach(function(p){
+      if(p.type === "sparkly" && p.detail){
+        if(bestRarity === null || RARITY_RANK[p.detail] > RARITY_RANK[bestRarity]){
+          bestRarity = p.detail;
+        }
+      }
+    });
+    awardSparkle.textContent = bestRarity ? RARITY_LABEL[bestRarity] + " ✨" : "No sparkly pulls yet!";
+
+    var tagCounts = {}, firstSeen = {};
+    state.pulls.forEach(function(p, idx){
+      if(p.type === "love" && p.tags && p.tags.length){
+        p.tags.forEach(function(t){
+          tagCounts[t] = (tagCounts[t] || 0) + 1;
+          if(!(t in firstSeen)) firstSeen[t] = idx;
+        });
+      }
+    });
+    var bestTag = null;
+    Object.keys(tagCounts).forEach(function(t){
+      if(bestTag === null) bestTag = t;
+      else if(tagCounts[t] > tagCounts[bestTag]) bestTag = t;
+      else if(tagCounts[t] === tagCounts[bestTag] && firstSeen[t] < firstSeen[bestTag]) bestTag = t;
+    });
+    awardCharm.textContent = bestTag ? (TAG_LABEL[bestTag] + " 💛") : "No favorites yet!";
+
+    awardTotal.textContent = String(state.pulls.length);
+
+    if(bestRarity && bestTag){
+      awardsSummary.textContent = "Today was a " + RARITY_LABEL[bestRarity] + " and " + TAG_LABEL[bestTag] + " kind of day!";
+    } else if(bestRarity){
+      awardsSummary.textContent = "Today was a " + RARITY_LABEL[bestRarity] + " kind of day!";
+    } else if(bestTag){
+      awardsSummary.textContent = "Today was a " + TAG_LABEL[bestTag] + " kind of day!";
+    } else if(state.pulls.length > 0){
+      awardsSummary.textContent = "What a fun pack-opening session!";
+    } else {
+      awardsSummary.textContent = "Open some packs and tap in the good ones!";
+    }
+  }
+
+  awardsLink.addEventListener("click", function(){
+    renderAwards();
+    showScreen("awards");
+    pushNav("awards");
+  });
+  awardsBack.addEventListener("click", function(){
+    popNavIfMatches("awards");
+    showScreen("home");
+  });
+
+  /* =========================================================
+     Mute toggle
+  ========================================================= */
+  muteBtn.addEventListener("click", function(){
+    muted = !muted;
+    saveMuted();
+    renderHome();
+  });
+
+  /* =========================================================
+     Confetti (vanilla canvas, no dependencies)
+  ========================================================= */
+  var confettiColors = ["#FFD54A", "#FF9F1C", "#FF7AA2", "#FF9F6B", "#A0D8FF", "#C9A8FF", "#A8E6A1"];
+  var ctx = confettiCanvas.getContext("2d");
+  var particles = [];
+  var confettiRAF = null;
+  var confettiEndAt = 0;
+
+  function resizeCanvas(){
+    confettiCanvas.width = window.innerWidth * window.devicePixelRatio;
+    confettiCanvas.height = window.innerHeight * window.devicePixelRatio;
+    confettiCanvas.style.width = window.innerWidth + "px";
+    confettiCanvas.style.height = window.innerHeight + "px";
+  }
+  window.addEventListener("resize", resizeCanvas);
+
+  function spawnParticles(count){
+    var w = window.innerWidth, dpr = window.devicePixelRatio || 1;
+    for(var i=0; i<count; i++){
+      particles.push({
+        x: (Math.random()*w) * dpr,
+        y: -20 * dpr - Math.random()*40*dpr,
+        vx: (Math.random()-0.5) * 3 * dpr,
+        vy: (2 + Math.random()*3) * dpr,
+        size: (5 + Math.random()*6) * dpr,
+        color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+        rot: Math.random()*Math.PI*2,
+        vr: (Math.random()-0.5) * 0.3,
+        life: 1
+      });
+    }
+  }
+
+  function stepConfetti(){
+    ctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+    var now = performance.now();
+    var fadeStart = confettiEndAt - 500;
+    particles.forEach(function(p){
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.03 * (window.devicePixelRatio||1);
+      p.rot += p.vr;
+      if(now > fadeStart){
+        p.life = Math.max(0, (confettiEndAt - now) / 500);
+      }
+      ctx.save();
+      ctx.globalAlpha = p.life;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
+      ctx.restore();
+    });
+    particles = particles.filter(function(p){ return p.y < confettiCanvas.height + 40 && p.life > 0; });
+    if(now < confettiEndAt || particles.length > 0){
+      confettiRAF = requestAnimationFrame(stepConfetti);
+    } else {
+      cancelAnimationFrame(confettiRAF);
+      confettiRAF = null;
+    }
+  }
+
+  function burstConfetti(count, durationMs){
+    resizeCanvas();
+    spawnParticles(count);
+    confettiEndAt = performance.now() + durationMs;
+    if(!confettiRAF){ confettiRAF = requestAnimationFrame(stepConfetti); }
+  }
+
+  /* =========================================================
+     Audio chime (Big tier only, unmuted) - Web Audio, no assets
+  ========================================================= */
+  var audioCtx = null;
+  function ensureAudioCtx(){
+    if(audioCtx) return audioCtx;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return null;
+    audioCtx = new AC();
+    return audioCtx;
+  }
+  document.addEventListener("pointerdown", function(){ ensureAudioCtx(); }, { once: true, passive: true });
+
+  function playChime(){
+    var ac = ensureAudioCtx();
+    if(!ac) return;
+    if(ac.state === "suspended"){ ac.resume(); }
+    var notes = [523.25, 659.25, 783.99]; // C5 E5 G5
+    var t0 = ac.currentTime;
+    notes.forEach(function(freq, i){
+      var osc = ac.createOscillator();
+      var gain = ac.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      var start = t0 + i*0.11;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.18, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+      osc.connect(gain).connect(ac.destination);
+      osc.start(start);
+      osc.stop(start + 0.4);
+    });
+  }
+
+  /* =========================================================
+     Celebration overlay
+  ========================================================= */
+  var celebrationTimer = null;
+  var TIER_CONFIG = {
+    small:  { count: 26,  duration: 1000, overlayMs: 1200 },
+    medium: { count: 60,  duration: 1500, overlayMs: 1800 },
+    big:    { count: 130, duration: 2200, overlayMs: 2500 }
+  };
+
+  function pickCopy(tier){
+    var pool = COPY[tier];
+    var idx;
+    if(pool.length === 1) idx = 0;
+    else{
+      do{ idx = Math.floor(Math.random()*pool.length); } while(idx === lastCopy[tier]);
+    }
+    lastCopy[tier] = idx;
+    return pool[idx];
+  }
+
+  function celebrate(tier){
+    var cfg = TIER_CONFIG[tier];
+    celebrationMsg.textContent = pickCopy(tier);
+    celebrationOverlay.classList.remove("hidden");
+    burstConfetti(cfg.count, cfg.duration);
+    if(tier === "big" && !muted){ playChime(); }
+
+    clearTimeout(celebrationTimer);
+    celebrationTimer = setTimeout(dismissCelebration, cfg.overlayMs);
+  }
+  function dismissCelebration(){
+    clearTimeout(celebrationTimer);
+    celebrationOverlay.classList.add("hidden");
+  }
+  celebrationOverlay.addEventListener("click", dismissCelebration);
+
+  /* =========================================================
+     Service worker registration
+  ========================================================= */
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("./sw.js").catch(function(){ /* no-op if blocked */ });
+    });
+  }
+
+  /* =========================================================
+     Init
+  ========================================================= */
+  function init(){
+    state = loadState();
+    muted = loadMuted();
+    buildRarityGrid();
+    buildTagGrid();
+    resizeCanvas();
+    goToInitialScreen();
+  }
+  init();
+
+})();
+</script>
+</body>
+</html>
